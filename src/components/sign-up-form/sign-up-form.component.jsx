@@ -1,6 +1,9 @@
-import {useState} from 'react'
+import {useState, useContext} from 'react'
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils';
 import FormInput from '../form-input/form-input.component';
+import './sign-up-form.styles.scss'
+import Button from '../button/button.component'
+import { UserContext } from '../../contexts/user.context';
 
 const defaultFormFields = { 
     displayName: '',
@@ -12,6 +15,9 @@ const defaultFormFields = {
 const SignUpForm = () => { 
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {displayName, email, password, confirmPassword} = formFields;
+
+    const {setCurrentUser} = useContext(UserContext)
+
 
     const resetFormFields = () => { 
         setFormFields(defaultFormFields)
@@ -27,7 +33,7 @@ const SignUpForm = () => {
 
             try { 
                 const {user} = await createAuthUserWithEmailAndPassword(email, password);
-                console.log(user);
+                setCurrentUser(user);
                 await createUserDocumentFromAuth(user, {displayName})
                 resetFormFields()
 
@@ -48,8 +54,9 @@ const SignUpForm = () => {
 
 
     return ( 
-        <div>
-            <h1>Sign up with your email and password</h1>
+        <div className='sign-up-container'>
+            <h2>Don't have an account?</h2>
+            <span>Sign up with your email and password</span>
             <form onSubmit={handleSubmit}> 
                 <FormInput
                     label='Display Name'
@@ -85,7 +92,7 @@ const SignUpForm = () => {
                     name='confirmPassword'
                     value={confirmPassword}
                  />
-                <button type='submit'>Sign Up</button>
+                <Button buttonType='google' type='submit'>Sign Up</Button>
                 
             </form>
         </div> 
