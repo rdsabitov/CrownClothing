@@ -79,3 +79,7 @@ export const onAuthStateChangedListener = (callback) => {
     onAuthStateChanged(auth, callback) 
 
 }
+
+export const onAuthProductChangedListener = (callback) => { 
+
+}
