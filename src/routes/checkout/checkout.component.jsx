@@ -32,12 +32,11 @@ const Checkout =() => {
                 
                 </CheckoutHeader>
            { 
-                cartItems.map((cartItem)=> { 
-                    const {id, name, quantity} = cartItem
-                    return (
+                cartItems.map((cartItem)=> (
+                
                     <CheckoutItem key={cartItem.id}  cartItem={cartItem} />
-                    )
-                })}
+                    
+                 ))}
            <CheckoutTotal>Total: ${cartTotal}</CheckoutTotal>
         </CheckoutContainer>
     );
